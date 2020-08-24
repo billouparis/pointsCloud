@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/">
+        <file alias="example.frag">example.frag</file>
+        <file alias="example.vert">example.vert</file>
+    </qresource>
+</RCC>
