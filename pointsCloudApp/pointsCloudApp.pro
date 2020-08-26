@@ -17,7 +17,9 @@ HEADERS += \
 
 DISTFILES += \
     CameraControls.qml \
+    CoordinatesSystem.qml \
     CustomSlider.qml \
+    OrbitCameraControllerBill.qml \
     PointsCloudEntity.qml \
     PointsCloudMaterial.qml \
     main.qml \

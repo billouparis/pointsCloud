@@ -63,20 +63,12 @@ QQ2.Item {
     width: 1600
     height: 900
 
-    CameraControls {
-        id: idCameraControls
-        prCamera: idCamera
-        prFovInit: 45
-        prPositionInit: Qt.vector3d( 0.5, 0.5, -10.0 )
-        prUpVectorInit: Qt.vector3d( 0.0, 1.0, 0.0 )
-        prViewCenterInit: Qt.vector3d( 0.5, 0.5, 0.0 )
-
-    }
-
+    property real prCameraDistance: -3.0
 
     Scene3D {
         id: idScene3D
-        anchors.top: idCameraControls.bottom
+        //anchors.top: idCameraControls.bottom
+        height: parent.height
         width: parent.width
         anchors.bottom: parent.bottom
 
@@ -90,26 +82,19 @@ QQ2.Item {
             Camera {
                 id: idCamera
                 projectionType: CameraLens.PerspectiveProjection
-                fieldOfView: 45
+                fieldOfView: 25
                 aspectRatio: 16/9
                 nearPlane : 1.0
                 farPlane : -1.0
-                position: Qt.vector3d( 0.5, 0.5, -10.0 )
+                position: Qt.vector3d( 0.0, 0.0, prCameraDistance )
                 upVector: Qt.vector3d( 0.0, 1.0, 0.0 )
-                viewCenter: Qt.vector3d( 0.5, 0.5, 0.0 )
-//                onPositionChanged: console.log ("position" + position)
-//                onUpVectorChanged: {
-//                    console.log ("upVector" + upVector)
-//                    // force upVector
-//                    camera.upVector = Qt.vector3d( 0.0, 1.0, 0.0 )
-//                }
+                viewCenter: Qt.vector3d( 0.0, 0.0, 0.0 )
 
-//                onViewCenterChanged: console.log("viewCenter " + viewCenter)
-//                onFieldOfViewChanged: console.log("FOV " + fieldOfView)
             }
 
-            OrbitCameraController {
+            OrbitCameraControllerBill {
                 camera: idCamera
+                prDistance: prCameraDistance
 
             }
 
@@ -121,18 +106,19 @@ QQ2.Item {
                         //showDebugOverlay: true
                         //viewportRect:  Qt.rect( 0, 0, 1920, 1080)
                         Viewport {
-                            normalizedRect: Qt.rect(0.0, 0.0,
+                            normalizedRect: Qt.rect(-1.0, -1.0,
                                                     1.0, 1.0)
                             ClearBuffers {
                                 buffers: ClearBuffers.ColorDepthBuffer
                             }
                         }
+
                     }
+
                 },
                 // Event Source will be set by the Qt3DQuickWindow
                 InputSettings { }
             ]
-
 
             //////////////////////////////////////////////////////
             // PointsCloud custom Geometry
@@ -140,7 +126,9 @@ QQ2.Item {
 
             }
 
-
+            CoordinatesSystem {
+                enabled: idCameraControls.prSystemCoord
+            }
         }
 
     }
@@ -151,8 +139,6 @@ QQ2.Item {
         width: 2
         height: idScene3D.height
         color: "green"
-
-
     }
 
     QQ2.Rectangle {
@@ -161,8 +147,14 @@ QQ2.Item {
         height: 2
         width: idScene3D.width
         color: "green"
+    }
 
+
+    // 2D Camera controls panel
+    CameraControls {
+        id: idCameraControls
+        prCamera: idCamera
+        prDistance: prCameraDistance
     }
 
 }
-//}

@@ -91,7 +91,7 @@ Entity {
         instanceCount: 1
         indexOffset: 0
         firstInstance: 0
-        primitiveType: (true == idCameraControls.prBPoints) ? GeometryRenderer.Triangles : GeometryRenderer.Points
+        primitiveType: /*(true == idCameraControls.prBPoints) ? GeometryRenderer.Triangles :*/ GeometryRenderer.Points
 //        primitiveType: GeometryRenderer.Points
         geometry: idPointsCloudVertexGeometry
 

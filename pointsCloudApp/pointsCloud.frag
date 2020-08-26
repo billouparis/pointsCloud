@@ -60,7 +60,7 @@ void main()
 {
 
     //output color from material
-    vec3 result =  hueShift(vec3(1.0, 0.0, 0.0), worldPosition.z );
+    vec3 result =  hueShift(vec3(1.0, 0.0, 0.0), worldPosition.z - 0.5);
     //vec3 result = vec3(0.0, 0.0, 1.0);
     fragColor = vec4(result, 1.0);
 //    fragColor = vec4(maincolor, 1.0);

@@ -65,32 +65,32 @@ Material {
 //        console.log(pointsCloud.zArray.length + " " + pointsCloud.pointsCount)
 //    }
 
-    property real prBounce: 0.0
+    property real prBounce: 1.0
 
-    QQ2.SequentialAnimation {
-        running: idCameraControls.prBBounce
-        loops: QQ2.Animation.Infinite
-        QQ2.NumberAnimation {
-            target: idRoot
-            property: "prBounce"
-            duration: 2000
-            from: 0.0
-            to: 1.0
-            easing.type: Easing.OutBounce
-        }
-         QQ2.PauseAnimation {
-             duration: 1000
-         }
+//    QQ2.SequentialAnimation {
+//        running: idCameraControls.prBBounce
+//        loops: QQ2.Animation.Infinite
+//        QQ2.NumberAnimation {
+//            target: idRoot
+//            property: "prBounce"
+//            duration: 2000
+//            from: 0.0
+//            to: 1.0
+//            easing.type: Easing.OutBounce
+//        }
+//         QQ2.PauseAnimation {
+//             duration: 1000
+//         }
 
-        QQ2.NumberAnimation {
-            target: idRoot
-            property: "prBounce"
-            duration: 2000
-            from: 1.0
-            to: 0.0
-            easing.type: Easing.OutBounce
-        }
-    }
+//        QQ2.NumberAnimation {
+//            target: idRoot
+//            property: "prBounce"
+//            duration: 2000
+//            from: 1.0
+//            to: 0.0
+//            easing.type: Easing.OutBounce
+//        }
+//    }
     //onPrBounceChanged: console.log(prBounce)
 
 

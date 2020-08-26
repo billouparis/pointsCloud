@@ -48,110 +48,63 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.2
-import QtQuick.Controls 2.2
+import QtQuick 2.2 as QQ2
+import Qt3D.Core 2.0
 import Qt3D.Render 2.0
+import Qt3D.Input 2.0
+import Qt3D.Extras 2.14
+import "."
 
-Item {
+Entity {
     id: idRoot
-    width:  1600
-    height: 150
 
-    property Camera prCamera
-    property real prAngle: 0
-    property real prDistance
-    property real prRotX
-    property real prRotZ
-    property alias prSystemCoord: idSystemCoord.checked
+    // Draws three planes
+    // x=0, y=0 and z=0
 
-    Rectangle {
-        anchors.fill: idRow
-        color: "fuchsia"
-    }
+    NodeInstantiator {
+        model: 3
+        Entity {
 
-    Row {
-        id: idRow
+            PlaneMesh {
+                id: idPlaneMesh
+                width: 2.0
+                height: 2.0
+                meshResolution: Qt.size(2, 2)
 
-        CustomSlider {
-            id: idFov
-            from: 0
-            to: 90
-            value: prCamera.fieldOfView
-            onValueChanged: {
-                console.log(value)
-                prCamera.setFieldOfView(value)
             }
-            stepSize: 0.1
-            text: "FOV " + value
-            onSgnReset: prCamera.setFieldOfView(prFovInit)
-        }
 
-        CheckBox {
-            id: idAnimRotation
-            checked: false
-            text: "Camera Rotation"
-            onCheckedChanged: {
-                console.log (checked)
-                idAnim.running =  (checked == true)
-                if (false == checked) {
-                    prAngle = 0
+
+            Texture2D {
+                id: texture
+                TextureImage {
+                    source:  (0 == index) ? "coordinates_system_x.png" :
+                                         (1 == index) ?  "coordinates_system_y.png" :
+                                                        "coordinates_system_z.png"
                 }
             }
-        }
 
-        CheckBox {
-            id: idAnimRotation2
-            checked: false
-            text: "Camera Rotation"
-            onCheckedChanged: {
-                console.log (checked)
-                idAnim.running =  (checked == true)
-                if (false == checked) {
-                    prAngle = 0
-                }
+
+            DiffuseSpecularMaterial
+            {
+                id: material
+                ambient:  Qt.rgba( 1.0, 1.0, 1.0, 1.0 )
+                diffuse:  texture
+                shininess: 155.0
+
             }
-        }
 
-        CheckBox {
-            id: idSystemCoord
-            checked: false
-            text: "System Coord"
+            Transform {
+                id: idTransform
+                rotation: (index == 0) ? fromAxisAndAngle(Qt.vector3d(0, 0, 1), 90) :
+                                         (1 == index) ? fromAxisAndAngle(Qt.vector3d(0, 0, 0), 0) :
+                                                        fromAxisAndAngle(Qt.vector3d(1, 0, 0), 90)
 
-        }
-    }
+            }
 
-    onPrAngleChanged: {
-        prRotX = Math.sin(idRoot.prAngle / 360. * Math.PI * 2) * prDistance
-        prRotZ = Math.cos(idRoot.prAngle / 360. * Math.PI * 2) * prDistance
+            components: [ idPlaneMesh, material, idTransform ]
 
-        if (idAnimRotation2.checked == true)
-        {
-            prCamera.setPosition(Qt.vector3d(0.0,
-                                             prRotX,
-                                             prRotZ))
-        }
-        else
-        {
-            prCamera.setPosition(Qt.vector3d(prRotX,
-                                             0.0,
-                                             prRotZ))
         }
     }
-
-    SequentialAnimation {
-        id: idAnim
-        loops: Animation.Infinite
-        NumberAnimation {
-            target: idRoot
-            property: "prAngle"
-            from: 0
-            to: 359
-            duration: 3000
-            easing.type: Easing.InOutQuad
-        }
-    }
-
-
 
 }
 

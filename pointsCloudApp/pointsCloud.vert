@@ -65,8 +65,16 @@ uniform mat4 mvp;
 void main()
 {
     // Transform position, normal, and tangent to world coords
+//    vertexPosition.x -= 0.5;
+//    vertexPosition.y -= 0.5;
+
     worldPosition = vec3(modelMatrix * vec4(vertexPosition, 1.0));
-    worldPosition.z = worldPosition.z * prBounce;
+
+//    worldPosition.z = worldPosition.z * prBounce;
+
+     worldPosition.x -= 0.5;
+     worldPosition.y -= 0.375; //480.0 / 640.0 / 2.0;
+     worldPosition.z -= 0.5;
     // Calculate vertex position in clip coordinates
     gl_Position = mvp * vec4(worldPosition, 1.0);
 }
